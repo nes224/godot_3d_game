@@ -2,16 +2,6 @@
 
 [ext_resource type="Script" uid="uid://bho3iyhygmp8x" path="res://scenes/platform/platform.gd" id="1_8pv2r"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xggjc"]
-albedo_color = Color(0.36078432, 0.49803922, 1, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_go71u"]
-material = SubResource("StandardMaterial3D_xggjc")
-size = Vector3(3, 0.5, 3)
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_kup7t"]
-size = Vector3(3, 0.5, 3)
-
 [sub_resource type="Animation" id="Animation_7j252"]
 length = 0.001
 tracks/0/type = "value"
@@ -50,20 +40,14 @@ _data = {
 &"vanish": SubResource("Animation_8pv2r")
 }
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_leib5"]
-height = 0.3
-radius = 1.3
-
 [node name="Platform" type="Node3D" unique_id=646254693]
 script = ExtResource("1_8pv2r")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=589509169]
-mesh = SubResource("BoxMesh_go71u")
 
 [node name="StaticBody3D" type="StaticBody3D" parent="." unique_id=1790249952]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" unique_id=1327931580]
-shape = SubResource("BoxShape3D_kup7t")
 
 [node name="Timer" type="Timer" parent="." unique_id=1544925168]
 wait_time = 4.0
@@ -77,7 +61,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.101579666, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" unique_id=2027734794]
 transform = Transform3D(1, 0, 0, 0, 0.8460333, 0, 0, 0, 1, 0, 0.16481948, 0)
-shape = SubResource("CylinderShape3D_leib5")
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_finished"]

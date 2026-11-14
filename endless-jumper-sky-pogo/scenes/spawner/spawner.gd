@@ -3,7 +3,7 @@ extends Node
 const OFFSET_SIDE: Vector2 = Vector2(1.7, 4.0)
 const OFFSET_UP: Vector2 = Vector2(2.7, 4.5)
 
-@export var platform_scene: PackedScene
+@export var platform_scenes: Array[PackedScene]
 
 @onready var platform: Platform = $Platform
 
@@ -17,7 +17,7 @@ func get_random_offset(offset_range: Vector2) -> float:
 
 
 func on_spawn_platform(old_platform_position: Vector3) -> void:
-	var new_platform: Platform = platform_scene.instantiate()
+	var new_platform: Platform = platform_scenes.pick_random().instantiate()
 	#new_platform.new_platform.connect(on_spawn_platform)
 	new_platform.position = old_platform_position + Vector3(
 		get_random_offset(OFFSET_SIDE),
