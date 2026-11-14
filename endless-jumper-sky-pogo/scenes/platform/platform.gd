@@ -1,7 +1,7 @@
 class_name Platform
 extends Node3D
 
-signal new_platform(platform_pos: Vector3)
+#signal new_platform(platform_pos: Vector3)
 
 @export var wait_time: float = 4.0
 
@@ -22,4 +22,5 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 	if  body is Player and not _is_hit:
 		_is_hit = true
 		timer.start(wait_time * randf_range(0.75, 1.2))
-		new_platform.emit(position)
+		#new_platform.emit(position)
+		SignalHub.emit_new_platform(position)
