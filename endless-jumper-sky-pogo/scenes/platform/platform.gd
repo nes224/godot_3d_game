@@ -7,6 +7,7 @@ extends Node3D
 
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var timer: Timer = $Timer
+@onready var land_effect: AudioStreamPlayer = $LandEffect
 
 var _is_hit:bool = false
 
@@ -23,4 +24,5 @@ func _on_area_3d_body_entered(body: Node3D) -> void:
 		_is_hit = true
 		timer.start(wait_time * randf_range(0.75, 1.2))
 		#new_platform.emit(position)
+		land_effect.play()
 		SignalHub.emit_new_platform(position)

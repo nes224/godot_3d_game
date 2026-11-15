@@ -5,8 +5,17 @@ const JUMP_FORCE: float = 32.0
 const GRAVITY: float = 60.0
 const ROTATION_SPEED: float = 4.0
 const MOVE_SPEED: float = 3.5
+const FALL_OFF_MARGIN: float = 20.0
 #var _gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
+@onready var fallen_off_sound: AudioStreamPlayer = $FallenOffSound
 @onready var animation_player: AnimationPlayer = $"character-female-a2/AnimationPlayer"
+
+var _fall_off_y: float = 0.0
+var _fell_off: bool = false
+
+func _ready() -> void:
+	_fall_off_y  =  position.y - FALL_OFF_MARGIN
+
 
 func _physics_process(delta:  float) -> void:
 	handle_gravity(delta)
@@ -14,6 +23,12 @@ func _physics_process(delta:  float) -> void:
 	handle_rotation(delta)
 	move_and_slide()
 	handle_animation()
+	handle_fall()
+	
+func handle_fall() -> void:
+	if not _fell_off and position.y < _fall_off_y:
+		_fell_off = true
+		fallen_off_sound.play()
 	
 func handle_rotation(delta: float) -> void:
 	if Input.is_action_pressed("ui_left"):
@@ -36,3 +51,7 @@ func handle_gravity(delta: float) -> void:
 	velocity.y -= GRAVITY * delta
 	if is_on_floor():
 		velocity.y = JUMP_FORCE
+
+
+func _on_fallen_off_sound_finished() -> void:
+	SignalHub.emit_game_over()
